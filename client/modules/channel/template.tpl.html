@@ -1,0 +1,36 @@
+<div>
+
+    <md-card>
+            <md-card-content layout="row">
+                <textarea ng-model="newmessage.body"></textarea>
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="end center">
+              <md-button ng-click="post(newmessage)">send</md-button>
+            </md-card-actions>
+    </md-card>
+    <div ng-repeat="message in items track by message.id ">
+
+    <md-card ng-init="edit=false">
+        <md-card-header>
+            <md-card-avatar>
+                        <avatar class="avatar right-align" userid="message.owner"/>
+            </md-card-avatar>
+            <md-card-header-text layout="row">
+                        <span am-time-ago="message.created"></span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content layout="row">
+                <p ng-if="!edit">{{message.body}}</p>
+                <textarea ng-model="message.body" ng-if="edit"></textarea>
+        </md-card-content>
+        <md-card-actions ng-show="!edit" layout="row" layout-align="end center">
+              <md-button ng-click="edit=true">Edit</md-button>
+              <md-button ng-click="message.remove()">Delete</md-button>
+        </md-card-actions>
+        <md-card-actions ng-show="edit" layout="row" layout-align="end center">
+              <md-button ng-click="edit=false">Cancel</md-button>
+              <md-button ng-click="message.put();edit=false">Save</md-button>
+        </md-card-actions>
+    </md-card>
+    </div>
+</div>

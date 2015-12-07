@@ -1,0 +1,69 @@
+
+<h2 class="thin">RAML 1.0 rethinkdb socket.io passport restangular -> <span class="red white-text" style="font-weight:bold">Rrspr</span></h2>
+<p>
+This is a rapid prototyping platform. REST API is data driven by rules from a RAML file.
+</p>
+<h4>Demo Appliction</h4>
+<p>This site is the demo application. You can login with github oauth. There is a profile form, a blog and you can use the chat.
+You can subscribe channels and have a contact list.</p>
+<p>At the moment this not for use in a heavy load environment. The indexes are not optimiced and all data go to the same table.
+
+</p>
+<p>Based on <a href="https://github.com/thejsj/passport-rethinkdb-tutorial">https://github.com/thejsj/passport-rethinkdb-tutorial</a>
+<h4>Todo</h4>
+<ul>
+<li>Recursive RESTlverwertung</li>
+<li>Resource filter beim socket</li>
+<li>Contact management</li>
+<li>Subscription management</li>
+</ul>
+<h4>Namespaces</h4>
+Messages are addressed with a paths. They have the smae conventions as path in http.
+Technicaly they are strings as parts of json objects stored in rethinkdb.
+
+Access rules are defined by substrings that are part of the resourename.
+They are addressed like directories and files in a filesystem.
+
+<h5>oauth</h5>
+<pre>/auth/user</pre>
+<pre>/auth/logout</pre>
+<h5>privat</h5>
+Every user gets a private namespace.
+Only this user is able to create nodes with resourcename "/user/:userid/**"
+
+Per default only the user with th :userid has read and write access to the namespace.
+
+<h5>Rules</h5>
+user only can read and write
+<pre>/user/{{user.id}}/*</pre>
+Examples
+<pre>/user/23234/config/</pre>
+<pre>/user/23234/contacts</pre>
+<pre>/user/23234/privat/diary</pre>
+<pre>/user/23234/privat/following</pre>
+<h5>public</h5>
+user can write, everybody can read
+<pre>/user/23234/public/*</pre>
+Examples
+<pre>/user/23234/public/profile</pre>
+<pre>/user/23234/public/blog</pre>
+<pre>/user/23234/public/geotag</pre>
+<h5>p2p</h5>
+communication between two users.
+
+There are two possiblitys two users are connectecd
+
+<pre>/p2p</pre>
+address like xmpp. "to" is required. "from" will be added by server.
+
+
+<h5>open</h5>
+write read for everybody
+<pre>/open/*</pre>
+Möge der rethink substring index performen.
+
+<pre>/resources</pre>
+<pre>/resources/{resourceid}</pre>
+</md-content>
+
+

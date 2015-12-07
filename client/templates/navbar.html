@@ -1,0 +1,67 @@
+<md-toolbar class="md-menu-toolbar">
+    <md-menu-bar>
+        <md-menu>
+            <span class="badge new" ui-sref="messages" style="margin-top:-12px">5</span>
+            <span></span>
+        </md-menu>
+
+        <md-menu>
+            <button ng-click="$mdOpenMenu()">
+                Doc
+            </button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button ui-sref="intro">
+                        Intro
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ui-sref="api">
+                        Api
+                    </md-button>
+                </md-menu-item>
+
+            </md-menu-content>
+        </md-menu>
+        <md-menu ng-if="!user.id">
+            <button ui-sref="login">
+                login
+            </button>
+            <span></span>
+        </md-menu>
+
+        <md-menu>
+            <button ng-click="$mdOpenMenu()">
+                {{user.login}}
+            </button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button ui-sref="profile">
+                        Profile
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ui-sref="blog">
+                        Blog
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ui-sref="routes">
+                        Routes
+                    </md-button>
+                </md-menu-item>
+                 <md-menu-item>
+                    <md-button ui-sref="contacts">
+                        Contacts
+                    </md-button>
+                </md-menu-item>
+ 
+
+                <md-menu-divider></md-menu-divider>
+                <md-menu-item>
+                    <md-button ng-click="ctrl.toggleSetting('clearFormatting')">logout</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </md-menu-bar>
+</md-toolbar>

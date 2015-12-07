@@ -1,0 +1,160 @@
+<div class="row">
+    <div class="col s3">
+    <avatar class="avatarbig " userid="$parent.user.id"></avatar>
+    </div>
+    <div class="col s9" ng-repeat="(key,value) in $parent.user">
+    <span class="thin">{{key}} : </span>  {{value}}
+    </div>
+</div>
+
+<div ng-init="profile=items[0]">
+<md-tabs md-dynamic-height md-border-bottom >
+      <md-tab label="base">
+        <md-content class="md-padding">
+          <h3 class="thin">Basic Informations </h3>
+
+<div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input ng-model="items[0].body.base.first_name" id="first_name" type="text" class="validate">
+          <label for="first_name">First Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input ng-model="items[0].body.base.last_name" id="last_name" type="text" class="validate">
+          <label for="last_name">Last Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input  ng-model="items[0].body.base.country" id="country" type="text" class="validate">
+          <label for="country">Country</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input ng-model="items[0].body.base.city"  id="city" type="text" class="validate">
+          <label for="city">City</label>
+        </div>
+        <div class="input-field col s6">
+          <input ng-model="items[0].body.base.zip"  id="zip" type="text" class="validate">
+          <label for="zip">Zip</label>
+        </div>
+      </div>
+       <div class="row">
+        <div class="input-field col s12">
+          <input ng-model="items[0].body.base.street"  id="street" type="text" class="validate">
+          <label for="street">Street</label>
+        </div>
+      </div>
+ 
+      <div class="row">
+        <div class="input-field col s12">
+          <input ng-model="items[0].body.base.number" id="password" type="text" class="validate">
+          <label for="password">Number</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input ng-model="items[0].body.base.private.email" id="email" type="email" class="validate">
+          <label for="email">Email</label>
+        </div>
+      </div>
+    </form>
+  </div>
+        </md-content>
+      </md-tab>
+      <md-tab label="job">
+        <md-content class="md-padding">
+          <h3 class="thin">Job related</h3>
+
+
+<div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input ng-model="items[0].body.job.job"  id="first_name" type="text" class="validate">
+          <label for="first_name">Job</label>
+        </div>
+        <div class="input-field col s6">
+          <input ng-model="items[0].body.job.employer" id="last_name" type="text" class="validate">
+          <label for="last_name">Employer</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input  id="disabled" type="text" class="validate">
+          <label for="disabled">Skills</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="text" class="validate">
+          <label for="password">spezial know how</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate">
+          <label for="email">Website</label>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+        </md-content>
+      </md-tab>
+      <md-tab label="family">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Tab Three</h1>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+
+<md-card-actions layout="row" layout-align="end center">
+      <md-button ng-click="cancel()">cancel</md-button>
+      <md-button ng-if="!items[0].id" ng-click="post(items[0])">create</md-button>
+      <md-button ng-if="items[0].id" ng-click="items[0].put()">save</md-button>
+</md-card-actions>
+<pre>{{items[0]|json}}</pre>
+
+
+<pre>{{profile|json}}</pre>
+
+</div>
+<!--
+<div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input  id="first_name" type="text" class="validate">
+          <label for="first_name">First Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate">
+          <label for="last_name">Last Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input  id="disabled" type="text" class="validate">
+          <label for="disabled">Disabled</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate">
+          <label for="password">Password</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate">
+          <label for="email">Email</label>
+        </div>
+      </div>
+    </form>
+  </div>
+
+-->

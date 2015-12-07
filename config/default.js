@@ -1,15 +1,11 @@
 module.exports = {
   github: {
-    clientID: '', // Go to github.com, create an application and add clientID
-    clientSecret: '' // Go to github.com, create an application and add clientSecret
-  },
-  twitter: {
-    consumerKey: '', // Go to apps.twitter.com, create an application and add consumerKey
-    consumerSecret: '' // Go to apps.twitter.com, create an application and add consumerSecret
+    clientID: '01f174d6d8e4573f0224', // Go to github.com, create an application and add clientID
+    clientSecret: '3ec056f3f13341290b186404df9780c847a68de6' // Go to github.com, create an application and add clientSecret
   },
   url: '127.0.0.1',
   ports: {
-    http: 8000
+    http: 8001
   },
   rethinkdb: {
     host: 'localhost',

@@ -1,0 +1,10 @@
+<h3 class="thin">Contacts</h3>
+<div class="row">
+    <div ng-repeat="item in items" class="col s6 m3">
+    <avatar  type="'full'" userid="item.userid"></avatar>
+    </div>
+</div>
+<input ng-model="newitem.userid" >
+<button ng-click="post(newitem)">submit</button>
+
+

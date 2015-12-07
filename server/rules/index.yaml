@@ -1,0 +1,24 @@
+#%RAML 1.0
+---
+title: Example API
+baseUri: http://example.com
+securitySchemes:
+  - basic:
+      type: commbase
+/auth:
+    /user:
+        get:
+            description: |
+                get information about logedin  user
+/user:
+    /{userid}:
+        get:
+            description: |
+                all incomming messages will be subscribed by default
+
+        /p2p:
+            /{parterid}:
+                description: |
+                    blabla
+                get: |
+                    get the chat messages

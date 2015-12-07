@@ -9,6 +9,9 @@ authController.getUser = function (req, res) {
   }
   res.status(400).json(null);
 };
+authController.getUsers = function (req, res) {
+    res.json({gugug:4});
+};
 authController.logout = function (req, res) {
   req.logout();
   res.redirect('/');

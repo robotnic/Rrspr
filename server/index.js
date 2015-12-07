@@ -7,34 +7,167 @@ var session = require('express-session');
 var engines = require('consolidate');
 
 var app = express();
+var bodyParser = require('body-parser')
 var auth = require('./auth');
 var authRouter = require('./auth/auth-router');
+
+var sockio = require("socket.io");
+var cookieParser = require('socket.io-cookie');
+var authControllers = require('./auth/auth-controller');
+var requestify = require('requestify'); 
+var channel = require('./channel'); 
+var rest=null;
+var rules = require('./rules')(); 
+
+
+app.use(bodyParser.json())
 
 // Middleware
 app
   .use(session({
-    secret: 'zfnzkwjehgweghw',
+    secret: 'rfrvnwerwrnevwrnernren8342$asdfs_%asd',
     resave: false,
     saveUninitialized: true
   }))
   .use(auth.initialize())
-  .use(auth.session());
+  .use(auth.session())
 
-// Views
-app
-  .set('views', __dirname + '/views')
-  .engine('html', engines.mustache)
-  .set('view engine', 'html');
 
 // Routes
 app
+
+  // oauth login
   .use('/auth', authRouter)
-  .get('/', function (req, res) {
-    res.render('index.html', { user: req.user });
+
+  //ugly programming
+  //should go to extra module
+  var resources=rules.resources();
+  for(var r in resources){
+     addRest(r);
+  }
+
+
+
+app
+  // API describtion 
+  .use('/resource', function(req,res){
+       res.send(rules.resource(req.url));
   })
+ .use('/resources', function(req,res){
+       res.send(rules.resources());
+  })
+
+  //public user info
+ .use('/user/:id', function(req,res){
+        rest.getUser(req.param("id")).then(function(avatar){
+            res.send(avatar);
+        });
+  })
+
+
+  // serve static files
   .use(express.static(__dirname + '/../client'))
+
+  // 404 not found
   .use('*', function (req, res) {
     res.status(404).send('404 Not Found').end();
   });
 
-app.listen(config.get('ports').http);
+
+  function addRest(r){
+    app.use(r+"$",function(req,res){
+        if(req.params["raml"]){
+            res.send(resources[r]);
+        }else{
+            var method=req.method.toLowerCase();
+            if(typeof(resources[r][method])!=="undefined"){
+                switch(method){
+                    case "post":
+                        req.body.resource=req.originalUrl; 
+                        rest.insert(req.body).then(function(response){;
+                            res.send(response);
+                        });
+                    break; 
+                    case "get":
+                        rest.list(req.originalUrl).then(function(response){
+                            res.send(response);
+                        });
+                    break; 
+                    case "delete":
+                        rest.delete(req.originalUrl).then(function(response){
+                            res.status(204).send("");
+                        });
+                    break;
+                    case "put":
+                        rest.update(req.originalUrl,req.body).then(function(response){
+                            res.status(200).send(response);
+                        });
+                    break;
+
+                    default:
+                        console.warn("method "+method+" not implemented");
+                }
+            }else{
+                res.send("can't find method "+ req.method.toLowerCase()+" for resource "+r);
+            }
+            
+        }
+    });
+  }
+
+
+  function restinger(req,res,next){
+    console.log(req.method,rules);
+    // Rest interface derived from RAML
+    var resources=rules.resources();
+    for(var r in resources){
+         console.log("listen to",r)
+         addRest(r);
+    }
+
+
+    next();
+  }
+
+
+
+
+
+/**
+And now the socket
+*/
+
+var io = sockio.listen(app.listen(config.get('ports').http));
+console.log("starting at port "+config.get('ports').http);
+
+io.use(cookieParser);
+
+
+io.on('connection', function (socket){
+
+    var sessionid=socket.handshake.headers.cookie['connect.sid'];
+
+    //bad workaroud - address may be wrong
+    requestify.get('http://127.0.0.1:'+config.get('ports').http+'/auth/user', {
+        cookies: {
+            "connect.sid": sessionid
+        },
+        dataType: 'json'        
+    })
+    .then(function(response) {
+        var user=response.body;
+//        var user=JOSN.parse(user);
+        socket.emit("user",user);
+        rest.setUser(JSON.parse(user));
+    },function(error){
+        console.log(error);
+    });
+
+
+    rest=channel(socket,"users/:userid/blog/:blogid");
+
+});
+
+
+
+

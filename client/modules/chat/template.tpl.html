@@ -1,0 +1,49 @@
+<div class="card medium hoverable" style="position:absolute;top:50px;right:50px;idth:300px;margin:20px;width:300px;overflow:auto;padding:10px">
+<span class="card-title" style="font-size:8px">{{resource}}</span>
+
+<div class="card-content" style="overflow:auto;min-height:300px;padding:0px">
+<table  class="chat">
+    <tr ng-repeat="message in items" >
+    <td style="width:40px;heigth:20px">
+    <md-menu>
+        <avatar class="avatarsmall" userid="message.owner" ng-click="$mdOpenMenu($event)"></avatar>
+        <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-click="openChat($event)">
+            <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
+            chat
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button  ng-click="addContact(message.from.id)">
+            <md-icon md-svg-icon="call:voicemail"></md-icon>
+           add contact
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button  ng-click="profile(message.from.id)">
+            <md-icon md-svg-icon="call:voicemail"></md-icon>
+          profile
+          </md-button>
+        </md-menu-item>
+
+        <md-menu-divider></md-menu-divider>
+        <md-menu-item>
+          <md-button ng-click="ctrl.toggleNotifications()">
+            <md-icon md-svg-icon="social:notifications-{{ctrl.notificationsEnabled ? 'off' : 'on'}}"></md-icon>
+            remove contact
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+    </td>
+    <td class="left-align" >{{message.body}}</td>
+    </tr>
+</table>
+</div>
+<div class="card-action">
+<input ng-model="newmessage.body"  ng-keyup="$event.keyCode == 13 && post(newmessage)"/>
+</div>
+</div>
+</div>
+

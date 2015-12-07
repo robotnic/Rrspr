@@ -1,0 +1,217 @@
+#%RAML 1.0
+---
+title: Example API
+baseUri: http://example.com
+securitySchemes:
+  - basic:
+      type: commbase
+
+
+types:
+  message:
+    type: object
+    properties:
+      to: string
+      from: string
+      body:
+
+resourceTypes:
+  rest:
+      usage: This resourceType should be used for any collection of items
+      description: The collection of <<resourcePathName>>
+      get:
+        securedBy: [ open ]
+        description: Get all <<resourcePathName>>, optionally filtered
+      post:
+        securedBy: [open]
+        description: Create a new <<resourcePathName | !singularize>>
+      /{id}:
+          get:
+              securedBy: [ open ]
+              description: get specific item;
+          put:
+              securedBy: [owner]
+              description: replace item with same id
+          delete:
+              securedBy: [owner]
+              description: move to /dev/null
+  comment:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of <<resourcePathName>>
+    get:
+      securedBy: [ open ]
+      description: Get all <<resourcePathName>>, optionally filtered
+    post:
+      securedBy: [ open ]
+      description: Create a new <<resourcePathName | !singularize>>
+    /{id}:
+        get:
+            securedBy: [ open ]
+            description: get specific item;
+        put:
+            securedBy: [ owner ]
+            description: replace item with same id
+        delete:
+            securedBy: [ owner ]
+            description: move to /dev/null
+
+  privat:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of <<resourcePathName>>
+    get:
+      securedBy: [privat]
+      description: Get all <<resourcePathName>>, optionally filtered
+    post:
+      securedBy: [privat]
+      description: Create a new <<resourcePathName | !singularize>>
+    /{id}:
+        get:
+            securedBy: [privat]
+            description: get specific item;
+        put:
+            securedBy: [privat]
+            description: replace item with same id
+        delete:
+            securedBy: [privat]
+            description: move to /dev/null
+  public:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of <<resourcePathName>>
+    get:
+      securedBy: [open]
+      description: Get all <<resourcePathName>>, optionally filtered
+    post:
+      securedBy: [privat]
+      description: Create a new <<resourcePathName | !singularize>>
+    /{id}:
+        get:
+            securedBy: [open]
+            description: get specific item;
+        put:
+            securedBy: [privat]
+            description: replace item with same id
+        delete:
+            securedBy: [privat]
+            description: move to /dev/null
+  p2p:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of <<resourcePathName>>
+    get:
+      securedBy: [p2p]
+      description: Get all <<resourcePathName>>, optionally filtered
+    post:
+      securedBy: [open]
+      description: Create a new <<resourcePathName | !singularize>>
+    /{id}:
+        get:
+            securedBy: [p2p]
+            description: get specific item;
+        delete:
+            securedBy: [owner]
+            description: move to /dev/null
+  open:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of <<resourcePathName>>
+    get:
+      securedBy: [open]
+      description: Get all <<resourcePathName>>, optionally filtered
+    post:
+      securedBy: [open]
+      description: Create a new <<resourcePathName | !singularize>>
+    /{id}:
+        get:
+            securedBy: [open]
+            description: get specific item;
+        delete:
+            securedBy: [open]
+            description: move to /dev/null
+        put:
+            securedBy: [open]
+            description: move to /dev/null
+traits:
+  - paged:
+      queryParameters:
+          start:
+            description: |
+                The page number of the result-set to return.
+            type: integer
+            minimum: 0
+          limit:
+            description: |
+                 The number of rows in a page request.
+            type: integer
+            maximum: 100
+  - peer2peer:
+  - open:
+  - public:
+
+/auth:
+    /user:
+        get:
+            securedBy: [privat]
+            description: |
+                get information about logedin  user
+    /logout:
+        get:
+            securedBy: [privat]
+            description: |
+                logout, does not change oauth permissions
+
+
+/p2p:
+    description: |
+      get the chat messages
+      message is filtered by "from" and "to" properties.
+
+    type: p2p
+
+
+
+/users:
+    /{userid}:
+        get:
+            description: |
+                all incomming messages will be subscribed by default
+                changes().filter(...)
+
+
+
+
+        /contacts:
+            type: privat
+        /public:
+            /profile:
+                type: public
+            /markdownblog:
+                 type: public
+
+            /blog:
+                    description: |
+                        This ist the blog
+                    get:
+                        securedBy: [ open ]
+                    post:
+                        securedBy: [ privat ]
+                    /{blogid}:
+                       /comments:
+                         type: comment
+                       /likes:
+                         type: rest
+
+                       description: |
+                          own must create the node
+                       get:
+                          description: |
+                            get a specific blog item
+                       put:
+                           securedBy: [ privat ]
+                           description: |
+                             save modifid version of blog item
+                       delete:
+                         securedBy: [ privat ]
+                         description: |
+                           delete this blog item
+/open:
+  /{topic}:
+    /{name}:
+      type: open

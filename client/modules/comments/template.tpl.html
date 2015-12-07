@@ -1,0 +1,21 @@
+<div>
+<div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input ng-model="newcomment.body" id="newcomment" ng-keyup="$event.keyCode == 13 && post(newcomment)" type="text" class="validate">
+          <label for="newcomment">Write a nice comment</label>
+        </div>
+      </div>
+    </form>
+</div>
+<h5 class="thin" ng-if="items.length >0">Comments</h5>
+    <div ng-repeat="message in items track by message.id " class="row">
+            <div class="col s1">
+                <avatar class="avatarsmall right-align" userid="message.owner"></avatar>
+            </div>
+            <div class="col s11">
+                <p>{{message.body}}</p>
+            </div>
+    </div>
+</div>

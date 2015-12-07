@@ -1,0 +1,56 @@
+#logo{
+background-image:url('icons/spider.png');
+background-size:150px;
+background-repeat:no-repeat;
+width:200px;
+height:160px;
+position:absolute;
+top:0px;
+z-index:100;
+}
+#logo2{
+position:absolute;
+top:10px;
+left:12px;
+z-index:1000;
+}
+.avatar div{
+width:50px;
+height:50px;
+margin:10px;
+background-size:cover;
+display:inline-block;
+}
+.avatarbig div{
+width:150px;
+height:150px;
+margin:10px;
+background-size:cover;
+display:inline-block;
+}
+.avatarsmall div{
+width:30px;
+height:30px;
+margin:3px;
+background-size:cover;
+display:inline-block;
+}
+
+.chat td{
+vertical-align:top;
+padding:2px;
+font-size:12px;
+}
+.md-menu-toolbar{
+text-align:right;
+}
+md-card{
+color:gray;
+}
+.method{
+margin:0px;
+
+min-width:50px;
+display:inline-block;
+text-align:center;
+}

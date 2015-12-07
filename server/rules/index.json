@@ -1,0 +1,48 @@
+module.exports={
+    "type": "rules",
+    "version": "0.1",
+    "permissions": [
+        {
+            "path": "/user/:userid/p2p/:partnerid",
+            "userid": {
+                "permission": [
+                    "read",
+                    "write",
+                    "delete"
+                ]
+            },
+            "partnerid": {
+                "permission": [
+                    "read",
+                    "write",
+                    "deleteown"
+                ]
+            }
+        },
+        {
+            "path": "/user/:userid/public/:channel",
+            "userid": {
+                "permission": [
+                    "read",
+                    "write",
+                    "delete"
+                ]
+            },
+            "all": {
+                "permission": [
+                    "read"
+                ]
+            }
+        },
+        {
+            "path": "/open/*",
+            "all": {
+                "permission": [
+                    "read",
+                    "write",
+                    "deleteown"
+                ]
+            }
+        }
+    ]
+}

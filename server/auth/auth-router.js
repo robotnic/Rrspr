@@ -20,6 +20,7 @@ authRouter.use('/login/callback/twitter', auth.authenticate('twitter'), function
 authRouter.get('/login/twitter', auth.authenticate('twitter'));
 
 // All
+authRouter.use('/users', authControllers.getUsers);
 authRouter.use('/user', authControllers.getUser);
 authRouter.use('/logout', authControllers.logout);
 

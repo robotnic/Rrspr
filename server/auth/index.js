@@ -74,6 +74,7 @@ passport.use(new GitHubStrategy({
 ));
 
 // Twitter
+/*
 passport.use(new TwitterStrategy({
     consumerKey: config.get('twitter').consumerKey,
     consumerSecret: config.get('twitter').consumerSecret,
@@ -89,6 +90,7 @@ passport.use(new TwitterStrategy({
     };
   }, 'twitter')
 ));
+*/
 
 passport.checkIfLoggedIn = function (req, res, next) {
   if (req.user) {

@@ -1,0 +1,12 @@
+<div ng-if="type!='full'"  style="background-image:url({{user.avatarUrl}})"></div>
+<div ng-if="type=='full'" > 
+          <div class="card darken-1" >
+            <div class="card-image">
+              <img ng-src="{{user.avatarUrl}}">
+              <span class="card-title">{{user.login}}</span>
+            </div>
+            <div class="card-action">
+              <a href="user.website">website</a>
+            </div>
+          </div>
+</div>
