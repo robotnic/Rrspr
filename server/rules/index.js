@@ -21,9 +21,7 @@ module.exports=function(){
 
         if(typeof(bible)==="object"){
             for( var b in bible){
-                console.log(b,d);
                 if(bible[b] && bible[b].type){
-                    console.log("type",bible[b].type);
                     var rT=thebible.resourceTypes[bible[b].type];
                     if(rT){
                         bible[b]=merge(rT,bible[b]);
@@ -59,7 +57,6 @@ module.exports=function(){
     return {
         route:"/",
         use:function(req,res,next){
-            console.log(req);
             res.json({"hi":5});
             next();
         },

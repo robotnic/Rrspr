@@ -57,6 +57,7 @@ pointToLayer: function(feature, latlng) {
             features:[]
         }
         for(var i=0;i< $scope.items.length;i++){
+                    $scope.items[i].geojson.opacity=1-i/10;
                     fc.features.push($scope.items[i].geojson);
         }
 
@@ -79,8 +80,8 @@ pointToLayer: function(feature, latlng) {
                         fillColor: "#ff7800",
                         color: "#000",
                         weight: 1,
-                        opacity: 1,
-                        fillOpacity: 0.8
+                        opacity: feature.opacity,
+                        fillOpacity: feature.opacity
                     });
                 }
             }

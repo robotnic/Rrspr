@@ -1,44 +1,11 @@
 <div class="card medium hoverable" style="margin:20px;overflow:auto;padding:10px">
 <span class="card-title" style="font-size:8px">{{resource}}</span>
 
-<div class="card-content" style="overflow:auto;min-height:300px;padding:0px">
+<div scroll-glue class="card-content" style="overflow:auto;min-height:300px;padding:0px">
 <table  class="chat">
-    <tr ng-repeat="message in items" >
+    <tr ng-repeat="message in items | orderBy:'created':false" >
     <td style="width:40px;heigth:20px">
         <avatar class="avatarsmall" userid="message.owner" ></avatar>
-<!--
-    <md-menu>
-        <avatar class="avatarsmall" userid="message.owner" ng-click="$mdOpenMenu($event)"></avatar>
-        <md-menu-content width="4">
-        <md-menu-item>
-          <md-button ng-click="openChat($event)">
-            <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
-            chat
-          </md-button>
-        </md-menu-item>
-        <md-menu-item>
-          <md-button  ng-click="addContact(message.from.id)">
-            <md-icon md-svg-icon="call:voicemail"></md-icon>
-           add contact
-          </md-button>
-        </md-menu-item>
-        <md-menu-item>
-          <md-button  ng-click="profile(message.from.id)">
-            <md-icon md-svg-icon="call:voicemail"></md-icon>
-          profile
-          </md-button>
-        </md-menu-item>
-
-        <md-menu-divider></md-menu-divider>
-        <md-menu-item>
-          <md-button ng-click="ctrl.toggleNotifications()">
-            <md-icon md-svg-icon="social:notifications-{{ctrl.notificationsEnabled ? 'off' : 'on'}}"></md-icon>
-            remove contact
-          </md-button>
-        </md-menu-item>
-      </md-menu-content>
-    </md-menu>
--->
     </td>
     <td class="left-align" >{{message.body}}</td>
     </tr>

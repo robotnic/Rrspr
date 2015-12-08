@@ -67,6 +67,12 @@
       </div>
     </form>
   </div>
+    <md-card-actions layout="row" layout-align="end center">
+      <md-button ng-click="cancel()">cancel</md-button>
+      <md-button ng-if="!items[0].id" ng-click="post(items[0])">create</md-button>
+      <md-button ng-if="items[0].id" ng-click="items[0].put()">save</md-button>
+    </md-card-actions>
+
         </md-content>
       </md-tab>
       <md-tab label="job">
@@ -108,7 +114,14 @@
   </div>
 
 
+    <md-card-actions layout="row" layout-align="end center">
+      <md-button ng-click="cancel()">cancel</md-button>
+      <md-button ng-if="!items[0].id" ng-click="post(items[0])">create</md-button>
+      <md-button ng-if="items[0].id" ng-click="items[0].put()">save</md-button>
+    </md-card-actions>
     </md-content>
+
+
       </md-tab>
       <md-tab label="blog">
         <md-content class="md-padding">
@@ -123,11 +136,6 @@
 
     </md-tabs>
 
-    <md-card-actions layout="row" layout-align="end center">
-      <md-button ng-click="cancel()">cancel</md-button>
-      <md-button ng-if="!items[0].id" ng-click="post(items[0])">create</md-button>
-      <md-button ng-if="items[0].id" ng-click="items[0].put()">save</md-button>
-    </md-card-actions>
 
 </div>
 <!--

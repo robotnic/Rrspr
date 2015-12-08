@@ -1,15 +1,16 @@
 <div>
 <h5 class="thin" ng-if="items.length >0">Comments</h5>
-    <div ng-repeat="message in items track by message.id " class="row">
-            <div class="col s1">
-                <avatar class="avatarsmall right-align" userid="message.owner"></avatar>
-            </div>
-            <div class="col s11">
-                <b><avatar type="'login'" userid="message.owner"></avatar></b>
-                <span am-time-ago="message.created"></span>
-                <p>{{message.body}}</p>
-            </div>
-    </div>
+<md-list>
+    <md-list-item class="md-3-line md-long-text" ng-repeat="message in items  | orderBy:'created':false">
+        <avatar class="md-avatar avatarsmall right-align" userid="message.owner"></avatar>
+        <div class="md-list-item-text" layout="column">
+          <h3><avatar type="'login'" userid="message.owner"></avatar></h3>
+            <span am-time-ago="message.created"></span>
+            <p>{{message.body}}</p>
+
+        </div>
+      </md-list-item>
+</md-list>
 
 <div class="row">
     <form class="col s12">

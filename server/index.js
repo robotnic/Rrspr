@@ -13,11 +13,16 @@ var authRouter = require('./auth/auth-router');
 
 var sockio = require("socket.io");
 var cookieParser = require('socket.io-cookie');
+var expressCookieParser = require('cookie-parser')
+
 var authControllers = require('./auth/auth-controller');
 var requestify = require('requestify'); 
 var channel = require('./channel'); 
-var rest=null;
 var rules = require('./rules')(); 
+
+var rest=null;
+
+var users={}
 
 
 app.use(bodyParser.json())
@@ -31,6 +36,7 @@ app
   }))
   .use(auth.initialize())
   .use(auth.session())
+  .use(expressCookieParser())
 
 
 // Routes
@@ -76,6 +82,15 @@ app
 
   function addRest(r){
     app.use(r+"$",function(req,res){
+
+        //store cookie for websocket request
+        if(req.user && req.cookies['connect.sid']){
+            if(!users[req.cookies['connect.sid']]){
+                users[req.cookies['connect.sid']]=req.user;
+            }
+            req.body.owner=req.user.id;
+        }
+        
         if(req.params["raml"]){
             res.send(resources[r]);
         }else{
@@ -91,11 +106,15 @@ app
                         req.body.resource=req.originalUrl; 
                         rest.insert(req.body).then(function(response){;
                             res.send(response);
+                        },function(error){
+                            res.status(500).send(error); 
                         });
                     break; 
                     case "get":
                         rest.list(req.originalUrl).then(function(response){
                             res.send(response);
+                        },function(error){
+                            res.status(500).send(error);
                         });
                     break; 
                     case "delete":
@@ -121,7 +140,7 @@ app
   }
 
   function securedBy(r,method,req,res){
-    console.log(r,method.securedBy,req.user.id,req.body,req.params.userid);
+    console.log(r,method.securedBy,req.user,req.body,req.params.userid);
     var allowed=false;
     for(var s=0;s<method.securedBy.length;s++){
        var rule=method.securedBy[s]; 
@@ -132,7 +151,7 @@ app
                 allowed=true;
                 break;
             case "privat": 
-                if(req.user.id==req.params.userid){
+                if(req.user && req.user.id==req.params.userid){
                     allowed=true;
                 } 
                 break;
@@ -173,37 +192,23 @@ app
 And now the socket
 */
 
-var io = sockio.listen(app.listen(config.get('ports').http));
 console.log("starting at port "+config.get('ports').http);
+var io = sockio.listen(app.listen(config.get('ports').http))
 
 io.use(cookieParser);
 
 
+//http://stackoverflow.com/a/24859515
+
+
 io.on('connection', function (socket){
-    var user=null;
     var sessionid=socket.handshake.headers.cookie['connect.sid'];
-
-    //bad workaroud - address may be wrong
-    requestify.get('http://127.0.0.1:'+config.get('ports').http+'/auth/user', {
-        cookies: {
-            "connect.sid": sessionid
-        },
-        dataType: 'json'        
-    })
-    .then(function(response) {
-        user=response.body;
-//        var user=JOSN.parse(user);
-        socket.emit("user",user);
-        rest.setUser(JSON.parse(user));
-    },function(error){
-        console.log(error);
-    });
-
-    //was ist das???
-    rest=channel(socket,"users/:userid/blog/:blogid");
-
+    socket.user=users[sessionid];
+    rest.init(socket);
+    return
 });
 
 
 
+rest=channel();
 
