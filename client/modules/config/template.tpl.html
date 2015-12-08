@@ -1,0 +1,53 @@
+<div class="card lighten-5">
+            <div class="card-content ">
+              <span class="card-title">oAuth Config</span>
+
+
+
+<div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12 m4">
+          <input ng-model="items[0].github.client.id" id="first_name" type="text" class="validate" >
+          <label for="first_name" >Github Client id</label>
+        </div>
+        <div class="input-field col s12 m8">
+          <input ng-model="items[0].github.client.secret" id="last_name" type="text" class="validate">
+          <label for="last_name">Github Client secret</label>
+        </div>
+      </div>
+  <div class="row">
+    <div class="input-field col s12 m4">
+      <input ng-model="items[0].facbook.client.id" id="first_name" type="text" class="validate" >
+      <label for="first_name" >Facebook Client id</label>
+    </div>
+    <div class="input-field col s12 m8">
+      <input ng-model="items[0].facebook.client.id" id="last_name" type="text" class="validate">
+      <label for="last_name">Facebook Client secret</label>
+    </div>
+  </div>
+
+<div class="row">
+    <div class="input-field col s12 m4">
+      <input ng-model="items[0].twitter.client.id" id="first_name" type="text" class="validate" >
+      <label for="first_name" >Twitter Client id</label>
+    </div>
+    <div class="input-field col s12 m8">
+      <input ng-model="items[0].twitter.client.secret" id="last_name" type="text" class="validate">
+      <label for="last_name">Twitter Client secret</label>
+    </div>
+  </div>
+
+
+
+    </form>
+  </div>
+
+
+</div>
+            <div class="card-action">
+      <md-button ng-if="!items[0].id" ng-click="post(items[0])">create</md-button>
+      <md-button ng-if="items[0].id" ng-click="items[0].put()">save</md-button>
+            </div>
+          </div>
+

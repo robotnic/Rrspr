@@ -1,10 +1,12 @@
-<div class="card medium hoverable" style="position:absolute;top:50px;right:50px;idth:300px;margin:20px;width:300px;overflow:auto;padding:10px">
+<div class="card medium hoverable" style="margin:20px;overflow:auto;padding:10px">
 <span class="card-title" style="font-size:8px">{{resource}}</span>
 
 <div class="card-content" style="overflow:auto;min-height:300px;padding:0px">
 <table  class="chat">
     <tr ng-repeat="message in items" >
     <td style="width:40px;heigth:20px">
+        <avatar class="avatarsmall" userid="message.owner" ></avatar>
+<!--
     <md-menu>
         <avatar class="avatarsmall" userid="message.owner" ng-click="$mdOpenMenu($event)"></avatar>
         <md-menu-content width="4">
@@ -36,6 +38,7 @@
         </md-menu-item>
       </md-menu-content>
     </md-menu>
+-->
     </td>
     <td class="left-align" >{{message.body}}</td>
     </tr>

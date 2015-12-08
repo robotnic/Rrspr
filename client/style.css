@@ -1,12 +1,17 @@
+body{
+font-size:12px;
+}
 #logo{
 background-image:url('icons/spider.png');
-background-size:150px;
+background-size:120px;
 background-repeat:no-repeat;
-width:200px;
-height:160px;
+width:120px;
+height:100px;
 position:absolute;
 top:0px;
-z-index:100;
+left:10px;
+z-index:10000;
+pointer-events: none;
 }
 #logo2{
 position:absolute;
@@ -53,4 +58,11 @@ margin:0px;
 min-width:50px;
 display:inline-block;
 text-align:center;
+}
+
+comments div{
+margin-left:20px;
+}
+comments .row{
+margin-bottom:0px;
 }

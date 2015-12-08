@@ -1,4 +1,48 @@
-<div ng-if="type!='full'"  style="background-image:url({{user.avatarUrl}})"></div>
+<md-menu ng-if="!type">
+<div style="background-image:url({{user.avatarUrl}})" ng-click="$mdOpenMenu($event)"></div>
+ <md-menu-content width="4">
+    <md-menu-item>
+      <md-button ng-click="openChat($event)">
+        <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
+        chat
+      </md-button>
+    </md-menu-item>
+    <md-menu-item>
+      <md-button  ng-click="addContact(message.from.id)">
+        <md-icon md-svg-icon="call:voicemail"></md-icon>
+       add contact
+      </md-button>
+    </md-menu-item>
+    <md-menu-item>
+      <md-button  ui-sref="profile({userid:user.id})">
+        <md-icon md-svg-icon="call:voicemail"></md-icon>
+      profile
+      </md-button>
+    </md-menu-item>
+
+    <md-menu-divider></md-menu-divider>
+    <md-menu-item>
+      <md-button ng-click="ctrl.toggleNotifications()">
+        <md-icon md-svg-icon="social:notifications-{{ctrl.notificationsEnabled ? 'off' : 'on'}}"></md-icon>
+        remove contact
+      </md-button>
+    </md-menu-item>
+  </md-menu-content>
+</md-menu>
+
+
+
+<ul ng-if="type=='data'" class="collection small">
+    <li  ng-repeat="(key,value) in user"  class="collection-item">
+        <span class="thin">{{key}} : </span>  {{value}}
+    </li>
+</ul>
+
+
+
+<span ng-if="type=='login'" > 
+{{user.login}}
+</span>
 <div ng-if="type=='full'" > 
           <div class="card darken-1" >
             <div class="card-image">

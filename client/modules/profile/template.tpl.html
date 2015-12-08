@@ -1,24 +1,29 @@
-<div class="row">
-    <div class="col s3">
-    <avatar class="avatarbig " userid="$parent.user.id"></avatar>
-    </div>
-    <div class="col s9" ng-repeat="(key,value) in $parent.user">
-    <span class="thin">{{key}} : </span>  {{value}}
-    </div>
-</div>
 
 <div ng-init="profile=items[0]">
-<md-tabs md-dynamic-height md-border-bottom >
+    <md-tabs md-dynamic-height md-border-bottom >
+          <md-tab label="account">
+            <md-content class="md-padding">
+                <div class="row">
+                    <div class="col s3">
+                    <avatar class="avatarbig " userid="userid"></avatar>
+                    </div>
+                    <div class="col s9">
+                            <avatar class="avatarsmall " type="'data'" userid="userid"></avatar>
+                    </div>
+                </div>
+            </md-content>
+      </md-tab>
       <md-tab label="base">
-        <md-content class="md-padding">
+        <md-content class="md-padding">        
+
           <h3 class="thin">Basic Informations </h3>
 
 <div class="row">
     <form class="col s12">
       <div class="row">
         <div class="input-field col s6">
-          <input ng-model="items[0].body.base.first_name" id="first_name" type="text" class="validate">
-          <label for="first_name">First Name</label>
+          <input ng-model="items[0].body.base.first_name" id="first_name" type="text" class="validate" >
+          <label for="first_name" class="active">First Name</label>
         </div>
         <div class="input-field col s6">
           <input ng-model="items[0].body.base.last_name" id="last_name" type="text" class="validate">
@@ -51,7 +56,7 @@
       <div class="row">
         <div class="input-field col s12">
           <input ng-model="items[0].body.base.number" id="password" type="text" class="validate">
-          <label for="password">Number</label>
+          <label for="password" class="active">Number</label>
         </div>
       </div>
       <div class="row">
@@ -95,32 +100,34 @@
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="email" type="email" class="validate">
-          <label for="email">Website</label>
+          <input id="jobemail" type="jobemail" class="validate">
+          <label for="jobemail">Website</label>
         </div>
       </div>
     </form>
   </div>
 
 
-        </md-content>
+    </md-content>
       </md-tab>
-      <md-tab label="family">
+      <md-tab label="blog">
         <md-content class="md-padding">
-          <h1 class="md-display-2">Tab Three</h1>
+           <blog resource="'users/'+userid+'/public/blog'"></blog> 
         </md-content>
       </md-tab>
+      <md-tab label="map">
+        <md-content class="md-padding">
+           <map resource="'users/'+userid+'/public/geojson'"></map> 
+        </md-content>
+      </md-tab>
+
     </md-tabs>
 
-<md-card-actions layout="row" layout-align="end center">
+    <md-card-actions layout="row" layout-align="end center">
       <md-button ng-click="cancel()">cancel</md-button>
       <md-button ng-if="!items[0].id" ng-click="post(items[0])">create</md-button>
       <md-button ng-if="items[0].id" ng-click="items[0].put()">save</md-button>
-</md-card-actions>
-<pre>{{items[0]|json}}</pre>
-
-
-<pre>{{profile|json}}</pre>
+    </md-card-actions>
 
 </div>
 <!--

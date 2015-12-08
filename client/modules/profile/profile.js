@@ -4,7 +4,8 @@ angular.module("forms",[])
         templateUrl:"modules/profile/template.tpl.html",
         controller:"channelController",
         scope:{
-            resource:"="
+            resource:"=",
+            userid:"="
         }
     }
 })

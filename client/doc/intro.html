@@ -7,7 +7,7 @@ This is a rapid prototyping platform. REST API is data driven by rules from a RA
 <p>This site is the demo application. You can login with github oauth. There is a profile form, a blog and you can use the chat.
 You can subscribe channels and have a contact list.</p>
 <p>At the moment this not for use in a heavy load environment. The indexes are not optimiced and all data go to the same table.
-
+Events are broadcasted to all clients.
 </p>
 <p>Based on <a href="https://github.com/thejsj/passport-rethinkdb-tutorial">https://github.com/thejsj/passport-rethinkdb-tutorial</a>
 <h4>Todo</h4>
@@ -16,6 +16,7 @@ You can subscribe channels and have a contact list.</p>
 <li>Resource filter beim socket</li>
 <li>Contact management</li>
 <li>Subscription management</li>
+<li>/api - prefix</li>
 </ul>
 <h4>Namespaces</h4>
 Messages are addressed with a paths. They have the smae conventions as path in http.

@@ -1,4 +1,4 @@
-function chat(socket,resource) {
+function channel(socket,resource) {
     var connection = null;
     var r = require('rethinkdb');
     var config = require('config');
@@ -116,4 +116,4 @@ function chat(socket,resource) {
 }
 
 
-module.exports = chat;
+module.exports = channel;

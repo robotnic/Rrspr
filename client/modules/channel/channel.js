@@ -28,6 +28,9 @@ angular.module("rest",[])
                 $scope.items=sortByKey($scope.items,"created");
             }
         }
+        if($scope.update){
+            $scope.update();
+        }
     })
 
 
@@ -38,6 +41,9 @@ angular.module("rest",[])
         channel.getList().then(function(items){
             $scope.items=sortByKey(items,"created");
             R=items;
+            if($scope.update){
+                $scope.update();
+            }
         });
         $scope.post = function(item) {
             console.log("post",item);

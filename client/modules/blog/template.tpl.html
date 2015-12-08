@@ -1,40 +1,80 @@
-<div>
+<div> 
 
-    <md-card>
-            <md-card-content layout="row">
-                <textarea ng-model="newmessage.body"></textarea>
+    <!--
+    post new item
+    -->
+    <div class="fixed-action-btn horizontal" style="top: 5px; right: 24px;height:30px">
+        <a class="btn waves-effect waves-light red  " ng-click="newitem=!newitem"><i class="large material-icons">add</i></a>
+    </div>
+    <div ng-show="newitem">
+    <md-tabs md-dynamic-height md-border-bottom>
+
+    <!-- edit mode -->
+      <md-tab label="write"> 
+        <md-card>
+                <md-card-content layout="row">
+                    <textarea ng-model="newmessage.body" style="min-height:200px"></textarea>
+                </md-card-content>
+
+                <md-card-actions layout="row" layout-align="end center">
+                  <md-button ng-click="newitem=false">cancel</md-button>
+                  <md-button ng-click="post(newmessage)">send</md-button>
+                </md-card-actions>
+        </md-card>
+
+    <!-- preview mode -->
+      <md-tab label="preview" class="article"> 
+         <md-card>
+                <md-card-content layout="row">
+                      <article class="flow-text article" btf-markdown="newmessage.body" style="min-height:200px"></article> 
+                </md-card-content>
+
+                <md-card-actions layout="row" layout-align="end center">
+                  <md-button ng-click="newitem=false">cancel</md-button>
+                  <md-button ng-click="post(newmessage)">send</md-button>
+                </md-card-actions>
+        </md-card>
+
+      </md-tab>
+    </md-tabs>
+    </div>
+
+    <div>
+        <!-- blog item list -->
+
+        <div ng-repeat="message in items track by message.id ">
+<br/>
+<br/>
+        <md-card ng-init="edit=false">
+            <md-card-header>
+                <div class="row">
+                    <div class="col s2 m1">
+                            <avatar class="avatar right-align" userid="message.owner"/>
+                    </div>
+                    <div class="col s10 m11">
+                            <h5 style="margin-bottom:2px"><avatar type="'login'" userid="message.owner"></avatar></h5>
+                            <span am-time-ago="message.created"></span>
+                    </div>
+                </div>
+            </md-card-header>
+            <md-card-content ayout="row">
+                    <article lass="flow-text" btf-markdown="message.body" ></article> 
+                    <textarea ng-model="message.body" ng-if="edit"></textarea>
             </md-card-content>
-            <md-card-actions layout="row" layout-align="end center">
-              <md-button ng-click="post(newmessage)">send</md-button>
+
+            <md-card-actions ng-show="!edit" layout="row" layout-align="end center">
+                  <md-button ng-click="edit=true">Edit</md-button>
+                  <md-button ng-click="message.remove()">Delete</md-button>
             </md-card-actions>
-    </md-card>
-    <div ng-repeat="message in items track by message.id ">
-
-    <md-card ng-init="edit=false">
-        <md-card-header>
-            <md-card-avatar>
-                        <avatar class="avatar right-align" userid="message.owner"/>
-            </md-card-avatar>
-            <md-card-header-text layout="row">
-                        <span am-time-ago="message.created"></span>
-            </md-card-header-text>
-        </md-card-header>
-        <md-card-content ayout="row">
-                <p ng-if="!edit">{{message.body}}</p>
-                <textarea ng-model="message.body" ng-if="edit"></textarea>
-        </md-card-content>
-
-        <md-card-actions ng-show="!edit" layout="row" layout-align="end center">
-              <md-button ng-click="edit=true">Edit</md-button>
-              <md-button ng-click="message.remove()">Delete</md-button>
-        </md-card-actions>
-        <md-card-actions ng-show="edit" layout="row" layout-align="end center">
-              <md-button ng-click="edit=false">Cancel</md-button>
-              <md-button ng-click="message.put();edit=false">Save</md-button>
-        </md-card-actions>
- <md-card-footer>
-                <comments resource="message.route+'/'+message.id+'/comments'"></comments>
- </md-card-footer>
-    </md-card>
+            <md-card-actions ng-show="edit" layout="row" layout-align="end center">
+                  <md-button ng-click="edit=false">Cancel</md-button>
+                  <md-button ng-click="message.put();edit=false">Save</md-button>
+            </md-card-actions>
+             <md-card-footer>
+             </md-card-footer>
+        </md-card>
+        <comments resource="message.route+'/'+message.id+'/comments'"></comments>
+        
+        </div>
     </div>
 </div>

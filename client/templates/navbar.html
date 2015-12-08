@@ -36,26 +36,37 @@
             </button>
             <md-menu-content>
                 <md-menu-item>
-                    <md-button ui-sref="profile">
+                    <md-button ui-sref="profile({userid:user.id})">
                         Profile
                     </md-button>
                 </md-menu-item>
                 <md-menu-item>
-                    <md-button ui-sref="blog">
+                    <md-button ui-sref="blog({resource:user.id})">
                         Blog
                     </md-button>
                 </md-menu-item>
                 <md-menu-item>
-                    <md-button ui-sref="routes">
+                    <md-button ui-sref="routes({resource:resource})">
                         Routes
                     </md-button>
                 </md-menu-item>
                  <md-menu-item>
-                    <md-button ui-sref="contacts">
+                    <md-button ui-sref="contacts({resource:user.id})">
                         Contacts
                     </md-button>
                 </md-menu-item>
+                <md-menu-item>
+                    <md-button ui-sref="map({resource:user.id})">
+                        Map
+                    </md-button>
+                </md-menu-item>
+                 <md-menu-item>
+                    <md-button ui-sref="config">
+                        config
+                    </md-button>
+                </md-menu-item>
  
+
 
                 <md-menu-divider></md-menu-divider>
                 <md-menu-item>

@@ -74,6 +74,26 @@ resourceTypes:
         delete:
             securedBy: [privat]
             description: move to /dev/null
+  admin:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of <<resourcePathName>>
+    get:
+      securedBy: [admin]
+      description: Get all <<resourcePathName>>, optionally filtered
+    post:
+      securedBy: [admin]
+      description: Create a new <<resourcePathName | !singularize>>
+    /{id}:
+        get:
+            securedBy: [admin]
+            description: get specific item;
+        put:
+            securedBy: [admin]
+            description: replace item with same id
+        delete:
+            securedBy: [admin]
+            description: move to /dev/null
+
   public:
     usage: This resourceType should be used for any collection of items
     description: The collection of <<resourcePathName>>
@@ -148,15 +168,20 @@ traits:
 /auth:
     /user:
         get:
-            securedBy: [privat]
+            securedBy: [open]
             description: |
                 get information about logedin  user
     /logout:
         get:
-            securedBy: [privat]
+            securedBy: [open]
             description: |
                 logout, does not change oauth permissions
 
+/config:
+    description: |
+      oauth setup
+
+    type: admin
 
 /p2p:
     description: |
@@ -181,6 +206,8 @@ traits:
             type: privat
         /public:
             /profile:
+                type: public
+            /geojson:
                 type: public
             /markdownblog:
                  type: public
@@ -213,5 +240,6 @@ traits:
                            delete this blog item
 /open:
   /{topic}:
-    /{name}:
-      type: open
+    /{subtopic}:
+        /{name}:
+          type: open

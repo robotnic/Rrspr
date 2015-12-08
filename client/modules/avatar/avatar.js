@@ -32,6 +32,7 @@ angular.module("avatar",[])
         },
         templateUrl: 'modules/avatar/template.tpl.html',
         controller:function($scope,avatarFactory){
+            console.log("TYPPE",$scope.type);
             $scope.url=avatarFactory.avatar($scope.userid).then(function(user){
                 $scope.user=user;
             });

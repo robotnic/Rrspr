@@ -1,5 +1,5 @@
 var CHAT=null;
-angular.module("chatapp",['btford.socket-io','ngMaterial','ngAnimate',"restangular",'angularMoment',"avatar","rest",'ui.router','forms','comm','bloginger','commentinger','jsonFormatter','p2p'])
+angular.module("chatapp",['btford.socket-io','ngMaterial','ngAnimate',"restangular",'angularMoment',"avatar","rest",'ui.router','forms','comm','bloginger','commentinger','jsonFormatter','p2p','apidoc','map','config'])
 .factory('mysocket', function (socketFactory) {
   return socketFactory();
 })
@@ -22,12 +22,37 @@ angular.module("chatapp",['btford.socket-io','ngMaterial','ngAnimate',"restangul
       }
     })
     .state('blog', {
-      url: "/blog",
-      templateUrl: "views/blog.html"
+      url: "/blog?resource",
+      templateUrl: "views/blog.html",
+        controller:function($scope,$stateParams){
+            console.log($stateParams.resource);
+            $scope.resource=$stateParams.resource;
+            if(!$scope.resource){
+                $scope.resource="users/"+$scope.user.id+"/public/blog";
+                $scope.userid=$scope.user.id;
+            }
+
+        }
     })
+ 
     .state('profile', {
-      url: "/profile",
-      templateUrl: "views/profile.html"
+      url: "/profile?userid",
+      templateUrl: "views/profile.html" ,
+        controller:function($scope,$stateParams){
+            console.log($stateParams.userid);
+            $scope.resource="users/"+$stateParams.userid+"/public/profile";
+            if(!$scope.resource){
+                $scope.resource="users/"+$scope.user.id+"/public/profile";
+            }
+
+            $scope.userid=$stateParams.userid;
+            if(!$scope.userid){
+                $scope.userid=$scope.user.id;
+            }
+
+
+        }
+
     })
     .state('login', {
       url: "/login",
@@ -36,6 +61,23 @@ angular.module("chatapp",['btford.socket-io','ngMaterial','ngAnimate',"restangul
     .state('contacts', {
       url: "/contacts",
       templateUrl: "views/contacts.html"
+    })
+    .state('map', {
+      url: "/map?resource",
+      templateUrl: "views/map.html" ,
+        controller:function($scope,$stateParams){
+            console.log($stateParams.resource);
+            $scope.resource=$stateParams.resource;
+            if(!$scope.resource){
+                $scope.resource="users/"+$scope.user.id+"/public/geojson";
+            }
+        }
+
+    })
+ 
+    .state('config', {
+      url: "/config",
+      templateUrl: "views/config.html"
     })
  
 
@@ -47,6 +89,10 @@ angular.module("chatapp",['btford.socket-io','ngMaterial','ngAnimate',"restangul
       }
     });
 })
+
+
+
+
 .controller("chat",function($scope,$http,mysocket,$mdDialog,Restangular){
     CHAT=$scope;
     $scope.feeds={};

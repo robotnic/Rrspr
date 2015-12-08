@@ -1,40 +1,4 @@
 
 <h3 class="thin">Resources</h3>
 
-<ul class="collection">
-
-
-
-<li ng-repeat="(key,value) in resources" ng-init="open=false"  class="collection-item">
-<div class="row" style="margin-bottom:0" class="collection-item" ng-click="open=!open">
-<p class="col s7" >{{key}}</p>
-<p class="col s1" ng-repeat="item in ['post','get','put','delete']">
- <span style="min-width:120px"  ng-switch on="value[item].securedBy[0]" ng-if="value[item]" >
-      <span  class="red white-text method"   ng-switch-when="privat">{{item}}</span>
-      <span  class="yellow white-text method"   ng-switch-when="p2p">{{item}}</span>
-      <span  class="green white-text method"   ng-switch-when="open">{{item}}</span>
-      <span  class="purple white-text method"  ng-switch-when="owner">{{item}}</span>
-      <span  class="black white-text method"   ng-switch-default>{{item}}</span>
-  </span>
-</p>
-<!--
-<p class="col s1">
-<a ng-href class="secondary-content">
-<i class="material-icons">send</i>
-</a>
-</p>
--->
-</div>
-<div ng-if="open">
-        <md-card-content layout="row">
-                  <ul class="collection with-header">
-            <json-formatter json="value" open="3"></json-formatter>
-        </md-card-content>
-        <md-card-actions layout="row" layout-align="end center">
-          <md-button>Wiki</md-button>
-          <md-button>Close</md-button>
-        </md-card-actions>
-</div>
-</li>
-
-</ul>
+<api resources="resources"></api>

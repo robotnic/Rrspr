@@ -81,6 +81,11 @@ app
         }else{
             var method=req.method.toLowerCase();
             if(typeof(resources[r][method])!=="undefined"){
+                var allowed=securedBy(r,resources[r][method],req,res);
+                if(!allowed){
+                    res.status(401).send("not allowed");
+                    return;
+                }
                 switch(method){
                     case "post":
                         req.body.resource=req.originalUrl; 
@@ -115,6 +120,37 @@ app
     });
   }
 
+  function securedBy(r,method,req,res){
+    console.log(r,method.securedBy,req.user.id,req.body,req.params.userid);
+    var allowed=false;
+    for(var s=0;s<method.securedBy.length;s++){
+       var rule=method.securedBy[s]; 
+        
+        console.log("RULE",rule);
+        switch(rule){
+            case "open": 
+                allowed=true;
+                break;
+            case "privat": 
+                if(req.user.id==req.params.userid){
+                    allowed=true;
+                } 
+                break;
+            case "owner": 
+                    allowed=true;
+                break;
+            case "p2p": 
+                allowed=true;
+                break;
+            case "admin": 
+                allowed=true;
+                break;
+
+        }
+    }
+    return allowed;
+  }
+
 
   function restinger(req,res,next){
     console.log(req.method,rules);
@@ -144,7 +180,7 @@ io.use(cookieParser);
 
 
 io.on('connection', function (socket){
-
+    var user=null;
     var sessionid=socket.handshake.headers.cookie['connect.sid'];
 
     //bad workaroud - address may be wrong
@@ -155,7 +191,7 @@ io.on('connection', function (socket){
         dataType: 'json'        
     })
     .then(function(response) {
-        var user=response.body;
+        user=response.body;
 //        var user=JOSN.parse(user);
         socket.emit("user",user);
         rest.setUser(JSON.parse(user));
@@ -163,7 +199,7 @@ io.on('connection', function (socket){
         console.log(error);
     });
 
-
+    //was ist das???
     rest=channel(socket,"users/:userid/blog/:blogid");
 
 });
