@@ -93,12 +93,13 @@ angular.module("chatapp",['btford.socket-io','ngMaterial','ngAnimate',"restangul
 
 
 
-.controller("chat",function($scope,$http,mysocket,$mdDialog,Restangular){
+.controller("page",function($scope,$rootScope,$http,mysocket,$mdDialog,Restangular){
     CHAT=$scope;
     $scope.feeds={};
 
     $http.get("/auth/user").then(function(response){
         $scope.user=response.data;
+        $rootScope.rrspr_user=response.data;
     });
     $http.get("/resources").then(function(response){
         $scope.resources=response.data;
@@ -120,6 +121,7 @@ angular.module("chatapp",['btford.socket-io','ngMaterial','ngAnimate',"restangul
             console.log(response);
         });
     };
+
 })
 
 

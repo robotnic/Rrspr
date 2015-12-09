@@ -82,7 +82,7 @@ function channel(socket, resource) {
                     q.reject("no connection");
                 }
             } else {
-                q.reject("not logged in", socket.user);
+                q.reject("not logged in");
             }
             return q.promise;
         },

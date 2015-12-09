@@ -3,7 +3,7 @@
 
 <div scroll-glue class="card-content" style="overflow:auto;min-height:300px;padding:0px">
 <table  class="chat">
-    <tr ng-repeat="message in items | orderBy:'created':false" >
+    <tr ng-repeat="message in items | orderBy:'created':false" ng-class="message.rrspr_status">
     <td style="width:40px;heigth:20px">
         <avatar class="avatarsmall" userid="message.owner" ></avatar>
     </td>

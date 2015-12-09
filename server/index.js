@@ -107,14 +107,14 @@ app
                         rest.insert(req.body).then(function(response){;
                             res.send(response);
                         },function(error){
-                            res.status(500).send(error); 
+                            res.status(401).send(error); 
                         });
                     break; 
                     case "get":
                         rest.list(req.originalUrl).then(function(response){
                             res.send(response);
                         },function(error){
-                            res.status(500).send(error);
+                            res.status(401).send(error);
                         });
                     break; 
                     case "delete":
@@ -156,7 +156,7 @@ app
                 } 
                 break;
             case "owner": 
-                    allowed=true;
+                allowed=true;
                 break;
             case "p2p": 
                 allowed=true;
@@ -203,7 +203,7 @@ io.use(cookieParser);
 
 io.on('connection', function (socket){
     var sessionid=socket.handshake.headers.cookie['connect.sid'];
-    socket.user=users[sessionid];
+    socket.user=users[sessionid];  //running condition
     rest.init(socket);
     return
 });
@@ -211,4 +211,6 @@ io.on('connection', function (socket){
 
 
 rest=channel();
+
+
 

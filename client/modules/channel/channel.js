@@ -1,3 +1,4 @@
+var CHANNEL   //Debug
 angular.module("rest",[])
 .directive("channel",function(){
     return {
@@ -8,7 +9,8 @@ angular.module("rest",[])
         }
     }
 })
-.controller("channelController",function($scope,$http,$filter,mysocket,$mdDialog,Restangular){
+.controller("channelController",function($scope,$rootScope,$http,$filter,mysocket,$mdDialog,Restangular,$timeout){
+    CHANNEL=$scope;
     $scope.items=[];
 
     // SOCKET
@@ -47,9 +49,25 @@ angular.module("rest",[])
         });
         $scope.post = function(item) {
             console.log("post",item);
+            var clone=angular.copy(item);
             channel.post(item).then(function(newResource){
                     item.body="";
+
+                    //remove unconfirmed placeholder of posted item
+                    var index = $scope.items.indexOf(clone);
+                    $scope.items.splice(index, 1); 
+            },function(error){
+                clone.rrspr_status="error";
+                $timeout(function(){
+                    var index = $scope.items.indexOf(clone);
+                    $scope.items.splice(index, 1);
+                },2000); 
             })
+            if($rootScope.rrspr_user){
+                clone.owner=$rootScope.rrspr_user.id;
+            }
+            clone.rrspr_status="loading";
+            $scope.items.push(clone);
         }
 
 
