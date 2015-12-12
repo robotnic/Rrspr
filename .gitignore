@@ -3,3 +3,4 @@ node_modules
 congig/*
 !config/default.js
 client/bower_components
+rethinkdb_data
