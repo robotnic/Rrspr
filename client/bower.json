@@ -1,0 +1,38 @@
+{
+  "name": "rrspr client",
+  "homepage": "https://github.com/robotnic/Rrspr",
+  "authors": [
+    "Bernhard Zwischenbrugger <bz@datenkueche.com>"
+  ],
+  "description": "RAML 1.0 passport rethinkdb",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "passport",
+    "raml",
+    "1.0",
+    "rethinkdb"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-leaflet-directive": "~0.10.0",
+    "angular-markdown-directive": "~0.3.1",
+    "angular-moment": "~0.10.3",
+    "angular-scroll-glue": "~2.0.6",
+    "angular-socket-io": "~0.7.0",
+    "json-formatter": "~0.4.2",
+    "leaflet": "~0.7.7",
+    "materialize": "~0.97.3",
+    "ng-showdown": "~1.1.0",
+    "ui-leaflet": "~1.0.0",
+    "ui-router": "~0.2.15",
+    "angular-material": "~0.11.4"
+  }
+}
