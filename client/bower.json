@@ -30,7 +30,6 @@
     "json-formatter": "~0.4.2",
     "leaflet": "~0.7.7",
     "materialize": "~0.97.3",
-    "ng-showdown": "~1.1.0",
     "ui-leaflet": "~1.0.0",
     "ui-router": "~0.2.15",
     "angular-material": "~0.11.4"
