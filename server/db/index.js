@@ -24,6 +24,9 @@ r.init(config.get('rethinkdb'), [
   r.conn = conn;
   r.connections.push(conn);
   r.conn.use(config.get('rethinkdb').db);
+},function(error){
+  //db already exists
+  //console.log(error);
 });
 
 module.exports = r;

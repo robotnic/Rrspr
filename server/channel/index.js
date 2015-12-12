@@ -58,7 +58,6 @@ function channel(socket, resource) {
         init: function(socket) {
             //that.user=theuser;
             //console.log("TATATA",that.user);
-            console.log("SOCKET", socket.user);
             socketConnect(socket); //one db connection per user - thats not good
         },
         getUser: function(id) {
