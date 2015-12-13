@@ -19,6 +19,10 @@ r.init(config.get('rethinkdb'), [
   {
     name: 'users',
     indexes: ['login']
+  },
+  {
+    name: 'rest',
+    indexes: ['resource']
   }
 ]).then(function (conn) {
   r.conn = conn;
@@ -26,7 +30,7 @@ r.init(config.get('rethinkdb'), [
   r.conn.use(config.get('rethinkdb').db);
 },function(error){
   //db already exists
-  //console.log(error);
+  console.log(error.msg);
 });
 
 module.exports = r;

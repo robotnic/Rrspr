@@ -6,6 +6,7 @@ function channel(socket, resource) {
     var Q = require('q');
 
     var that = {}
+    var dbname=config.get("rethinkdb").db;
 
 
     r.connect(config.rethinkdb, function(error, conn) {
@@ -23,12 +24,12 @@ function channel(socket, resource) {
                 message.owner = socket.user;
             }
             checkpermissions(message);
-            r.db("test").table('chat').insert(message).run(connection, function(error, cursor) {
+            r.db(dbname).table('rest').insert(message).run(connection, function(error, cursor) {
                 //console.log(arguments);
             });
 
         })
-        r.db("test").table('chat').changes().run(connection, function(error, feed) {
+        r.db(dbname).table('rest').changes().run(connection, function(error, feed) {
             if (error) {
                 console.log(error);
             }
@@ -62,7 +63,7 @@ function channel(socket, resource) {
         },
         getUser: function(id) {
             var q = Q.defer();
-            r.db("passport_rethinkdb_tutorial").table('users').get(id).run(connection, function(error, cursor) {
+            r.db(dbname).table('users').get(id).run(connection, function(error, cursor) {
                 q.resolve(cursor);
             });
             return q.promise;
@@ -73,7 +74,7 @@ function channel(socket, resource) {
             var q = Q.defer();
             if (message.owner) {
                 if (connection) {
-                    r.db("test").table('chat').insert(message).run(connection, function(error, cursor) {
+                    r.db(dbname).table('rest').insert(message).run(connection, function(error, cursor) {
                         console.log("inserted", error, cursor);
                         q.resolve(cursor);
                     });
@@ -90,7 +91,7 @@ function channel(socket, resource) {
             if (connection) {
                 if (!skip) skip = 0;
                 if (!limit) limit = 10;
-                r.db("test").table('chat').orderBy(r.desc("created")).filter(function(user) {
+                r.db(dbname).table('rest').orderBy(r.desc("created")).filter(function(user) {
                     return (user('resource').match("^" + path + "$"))
                 }).skip(skip).limit(limit).run(connection, function(error, cursor) {
                     q.resolve(cursor.toArray());
@@ -105,7 +106,7 @@ function channel(socket, resource) {
             var id = path.split("/").pop();
             delete data.created; //do not overwrite creation date
             data.modified = (new Date()).getTime()
-            r.db("test").table("chat").get(id).update(data).run(connection, function(error, cursor) {
+            r.db(dbname).table("rest").get(id).update(data).run(connection, function(error, cursor) {
                 q.resolve(cursor);
             });
             return q.promise;
@@ -115,7 +116,7 @@ function channel(socket, resource) {
             console.log("delete", path);
             var id = path.split("/").pop();
             console.log("id", id);
-            r.db("test").table("chat").get(id).delete().run(connection, function(error, cursor) {
+            r.db(dbname).table("rest").get(id).delete().run(connection, function(error, cursor) {
                 q.resolve(cursor);
             });
             return q.promise;
