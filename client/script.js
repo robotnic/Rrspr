@@ -6,7 +6,7 @@ angular.module("chatapp",['btford.socket-io','ngMaterial','ngAnimate',"restangul
 .config(function($stateProvider, $urlRouterProvider) {
   //
   // For any unmatched url, redirect to /state1
-  $urlRouterProvider.otherwise("/blog");
+  $urlRouterProvider.otherwise("/profile");
   //
   // Now set up the states
   $stateProvider
